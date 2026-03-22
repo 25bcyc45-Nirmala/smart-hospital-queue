@@ -1,0 +1,69 @@
+body {
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: url('https://images.unsplash.com/photo-1586773860418-d37222d8fce3') no-repeat center center/cover;
+  color: #fff;
+}
+
+.container {
+  padding: 20px;
+  max-width: 800px;
+  margin: auto;
+  background: rgba(0,0,0,0.6);
+  border-radius: 15px;
+  margin-top: 30px;
+}
+
+h1, h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+form input, form select, form button {
+  display: block;
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+}
+
+button {
+  background-color: #4facfe;
+  color: #fff;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+button:hover {
+  background-color: #00f2fe;
+}
+
+.queue-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.queue-section li {
+  background: rgba(255,255,255,0.2);
+  margin: 5px 0;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.card-grid {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.card {
+  background: rgba(255,255,255,0.2);
+  padding: 20px;
+  border-radius: 12px;
+  width: 45%;
+  text-align: center;
+  font-size: 1.2rem;
+}
