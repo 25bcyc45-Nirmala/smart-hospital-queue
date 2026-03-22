@@ -1,9 +1,6 @@
-const { createClient } = require("@supabase/supabase-js");
-
-// Supabase configuration
 const supabase = createClient(
-  "https://wlczafxdhocwowslrcle.supabase.co",  // Project URL
-  "sb_publishable_CqoogtuvaQioFxcwlNdFzw_MyU-K3B8" // Public anon key
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_ANON_KEY
 );
 
 let token = 1;
@@ -22,7 +19,7 @@ const generateToken = async (req, res) => {
   const { data, error } = await supabase.from("patients").insert([newPatient]);
   if (error) return res.status(500).json({ error: error.message });
 
-  res.json(newPatient);
+  res.status(200).json({patient: newPatient});
 };
 
 // Get full queue
