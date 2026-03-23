@@ -2,7 +2,7 @@ const form = document.getElementById("patientForm");
 const queueList = document.getElementById("queueList");
 const clearQueueBtn = document.getElementById("clearQueue");
 
-const API_URL = "http://localhost:3000";
+const API_URL = window.API_URL ||"http://localhost:3000";
 
 // Generate Token
 form.addEventListener("submit", async (e) => {
