@@ -1,7 +1,7 @@
 // ======== app.js ========
 
 // Set the live backend URL
-const API_URL = "https://smart-hospital-queue-lb5m-git-main-25bcyc45-nirmalas-projects.vercel.app";
+const API_URL = "https://smart-hospital-queue-lb5m.vercel.app";
 
 const form = document.getElementById("patientForm");
 const queueList = document.getElementById("queueList");
