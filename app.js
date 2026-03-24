@@ -69,13 +69,20 @@ function animateValue(id, value) {
 // Clear Queue
 clearQueueBtn.addEventListener("click", async () => {
   try {
-    const res = await fetch(`${API_URL}/clear`, { method: "POST" });
+    const res = await fetch(`${API_URL}/clear`, {
+      method: "POST",
+    });
+
     if (!res.ok) throw new Error("Failed to clear queue");
+
+    // Reload the updated queue
     loadQueue();
   } catch (error) {
     console.error("Error clearing queue:", error);
+    alert("Failed to clear queue. Check backend connection.");
   }
 });
+
 
 // Auto refresh every 3 seconds
 setInterval(loadQueue, 3000);
