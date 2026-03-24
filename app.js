@@ -1,8 +1,11 @@
+// ======== app.js ========
+
+// Set the live backend URL
+const API_URL = "https://smart-hospital-queue-lb5m-2kqavkyuw-25bcyc45-nirmalas-projects.vercel.app";
+
 const form = document.getElementById("patientForm");
 const queueList = document.getElementById("queueList");
 const clearQueueBtn = document.getElementById("clearQueue");
-
-const API_URL = window.API_URL ||"http://localhost:3000";
 
 // Generate Token
 form.addEventListener("submit", async (e) => {
@@ -11,34 +14,46 @@ form.addEventListener("submit", async (e) => {
   const dept = document.getElementById("department").value;
   const emergency = document.getElementById("emergency").checked;
 
-  const res = await fetch(`${API_URL}/get-token`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ name, department: dept, emergency })
-  });
+  try {
+    const res = await fetch(`${API_URL}/get-token`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, department: dept, emergency })
+    });
 
-  const data = await res.json();
-  form.reset();
-  loadQueue();
+    if (!res.ok) throw new Error("Failed to generate token");
+
+    const data = await res.json();
+    form.reset();
+    loadQueue();
+  } catch (error) {
+    alert("Error generating token: " + error.message);
+    console.error(error);
+  }
 });
 
 // Load Queue
 async function loadQueue() {
-  const res = await fetch(`${API_URL}/queue`);
-  const data = await res.json();
+  try {
+    const res = await fetch(`${API_URL}/queue`);
+    if (!res.ok) throw new Error("Failed to load queue");
 
-  queueList.innerHTML = "";
-  let emergencyCount = 0;
+    const data = await res.json();
+    queueList.innerHTML = "";
+    let emergencyCount = 0;
 
-  data.forEach(p => {
-    if (p.emergency) emergencyCount++;
-    const li = document.createElement("li");
-    li.textContent = `Token ${p.token} - ${p.name} (${p.department}) ${p.emergency ? "🚨" : ""}`;
-    queueList.appendChild(li);
-  });
+    data.forEach(p => {
+      if (p.emergency) emergencyCount++;
+      const li = document.createElement("li");
+      li.textContent = `Token ${p.token} - ${p.name} (${p.department}) ${p.emergency ? "🚨" : ""}`;
+      queueList.appendChild(li);
+    });
 
-  animateValue("total", data.length);
-  animateValue("emergencyCount", emergencyCount);
+    animateValue("total", data.length);
+    animateValue("emergencyCount", emergencyCount);
+  } catch (error) {
+    console.error("Error loading queue:", error);
+  }
 }
 
 // Animated Counters
@@ -53,8 +68,13 @@ function animateValue(id, value) {
 
 // Clear Queue
 clearQueueBtn.addEventListener("click", async () => {
-  await fetch(`${API_URL}/clear`, { method: "POST" });
-  loadQueue();
+  try {
+    const res = await fetch(`${API_URL}/clear`, { method: "POST" });
+    if (!res.ok) throw new Error("Failed to clear queue");
+    loadQueue();
+  } catch (error) {
+    console.error("Error clearing queue:", error);
+  }
 });
 
 // Auto refresh every 3 seconds
